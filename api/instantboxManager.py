@@ -82,8 +82,9 @@ class InstantboxManager(object):
     def get_container_ports(self, container_name):
         try:
             if self.SWARM_MODE:
+                service_name = container_name
                 ports = self.client.services.get(
-                    container_name).attrs['Spec']['EndpointSpec']['Ports']
+                    service_name).attrs['Spec']['EndpointSpec']['Ports']
                 return {
                     item['TargetPort']: item['PublishedPort']
                     for item in ports
